@@ -222,14 +222,14 @@
         );
     }
 
-    if (JSON.parse(localStorage.getItem("login")).isSeller === undefined) {
+    if (JSON.parse(localStorage.getItem("login")) === null) {
         document.getElementById("logout").style.display = "none";
     } else {
         document.getElementById("logout").style.display = "flex";
     }
 
     document.getElementById("logout").addEventListener("click", () => {
-        fetchAPI("/auth/logout", "GET", {}).then((res) => {
+        fetchAPI("/auth/logout", "GET", {}).then(() => {
             localStorage.removeItem("login");
             loadComponent(document.getElementById("app"), "screens/auth", {});
         });
@@ -239,8 +239,8 @@
     loadComponent(card, "components/home/carousel", {});
 
     window.navigateDashboard = () => {
-        const isSeller = JSON.parse(localStorage.getItem("login")).isSeller;
-        if (isSeller !== undefined) {
+        const login = JSON.parse(localStorage.getItem("login"));
+        if (login !== null) {
             loadComponent(
                 document.getElementById("app"),
                 "screens/dashboard",
@@ -255,9 +255,9 @@
     search.addEventListener("keyup", (e) => {
         e.preventDefault();
         const search = document.getElementById("search").value;
+        document.getElementById("productList").innerHTML = "";
         fetchAPI('store/product', 'POST', {
             "filter": {
-                "random": true,
                 "query": search
             },
             "fields": [
@@ -286,7 +286,7 @@
             "description",
             "category",
             "price",
-            "starss",
+            "stars",
             "img"
         ],
         "max": -1
