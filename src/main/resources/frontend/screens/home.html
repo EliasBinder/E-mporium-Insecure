@@ -5,14 +5,21 @@
         <div class="header-item" onclick="scrollToHot()">Hot Offers</div>
     </div>
     <div class="right">
-        <div class="wrapper" id="logout">
+        <div class="wrapper button" id="chatBtn">
             <img
-                alt="Basket"
+                alt="Chat"
+                class="logo"
+                src="/frontend/assets?name=icons/chat.svg"
+            />
+        </div>
+        <div class="wrapper button" id="logout">
+            <img
+                alt="Logout"
                 class="logo"
                 src="/frontend/assets?name=icons/logout.svg"
             />
         </div>
-        <div class="wrapper" onclick="navigateDashboard()">
+        <div class="wrapper button" onclick="navigateDashboard()">
             <img
                 alt="Profile"
                 class="logo"
@@ -224,8 +231,10 @@
 
     if (JSON.parse(localStorage.getItem("login")) === null) {
         document.getElementById("logout").style.display = "none";
+        document.getElementById("chatBtn").style.display = "none";
     } else {
         document.getElementById("logout").style.display = "flex";
+        document.getElementById("chatBtn").style.display = "flex";
     }
 
     document.getElementById("logout").addEventListener("click", () => {
@@ -234,6 +243,12 @@
             loadComponent(document.getElementById("app"), "screens/auth", {});
         });
     });
+
+    document.getElementById("chatBtn").addEventListener("click", () => {
+        const chat = document.getElementById("chat")
+        chat.style.display = "block"
+        loadComponent(chat, "components/chat/user-list", {})
+    })
 
     const card = document.getElementById("carousel");
     loadComponent(card, "components/home/carousel", {});
@@ -255,7 +270,14 @@
     search.addEventListener("keyup", (e) => {
         e.preventDefault();
         const search = document.getElementById("search").value;
-        document.getElementById("productList").innerHTML = "";
+        const products = document.getElementById("productList");
+        products.innerHTML = "";
+        const searchedFor = document.createElement("div");
+        searchedFor.innerHTML = `Search results for "${search}"`;
+        searchedFor.style.margin = "10px";
+        searchedFor.style.color = "#205072";
+        searchedFor.style.fontWeight = "bold";
+        products.appendChild(searchedFor);
         fetchAPI('store/product', 'POST', {
             "filter": {
                 "query": search

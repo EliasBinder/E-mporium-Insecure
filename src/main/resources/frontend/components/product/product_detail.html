@@ -49,7 +49,7 @@
                     </div>
                 </div>
             </div>
-            <div class="green_outline" id="createReview">Send</div>
+            <div class="green_outline button" id="createReview">Send</div>
         </div>
     </div>
     <div class="column">
@@ -336,7 +336,7 @@
 
     updateReviews()
 
-    if (JSON.parse(localStorage.getItem("login")).isSeller === undefined) {
+    if (JSON.parse(localStorage.getItem("login")) === null) {
         document.getElementById("purchaseCont").style.display = "none"
         document.getElementById("createReviewCont").style.display = "none"
     }
@@ -347,7 +347,7 @@
     }
 
     document.getElementById("contactSeller").addEventListener("click", () => {
-        if (JSON.parse(localStorage.getItem("login")).isSeller !== undefined) {
+        if (JSON.parse(localStorage.getItem("login")) !== null && JSON.parse(localStorage.getItem("login")).isSeller !== undefined) {
             const chat = document.getElementById("chat")
             chat.style.display = "block"
             loadComponent(chat, "components/chat/chat", {
