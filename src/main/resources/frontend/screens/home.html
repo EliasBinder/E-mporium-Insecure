@@ -41,6 +41,7 @@
         </div>
     </div>
     <div class="divider"></div>
+    <div id="searchedFor" style="display: flex; justify-content: center; align-items: center; width: 100%"></div>
     <div class="products" id="productList"></div>
 </div>
 
@@ -277,7 +278,8 @@
         searchedFor.style.margin = "10px";
         searchedFor.style.color = "#205072";
         searchedFor.style.fontWeight = "bold";
-        products.appendChild(searchedFor);
+        document.getElementById("searchedFor").innerHTML = "";
+        document.getElementById("searchedFor").appendChild(searchedFor);
         fetchAPI('store/product', 'POST', {
             "filter": {
                 "query": search
