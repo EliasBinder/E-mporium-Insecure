@@ -84,6 +84,7 @@
             }
 
             fetchAPI("store/product", "PUT", data).then(() => {
+                window.render()
                 alert("Product created successfully")
             }).catch(e => {
                 alert(e.message)

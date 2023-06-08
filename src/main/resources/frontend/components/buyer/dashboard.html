@@ -1,4 +1,5 @@
 <div class="background"></div>
+<img alt="home" class="button backHome" id="back" src="/frontend/assets?name=icons/home.svg">
 <div class="seller-dashboard">
     <div class="greetings">
         <div class="title">Hello, <span id="username"></span></div>
@@ -31,6 +32,15 @@
         align-self: start;
         height: 100%;
         width: 100%;
+    }
+
+    .backHome {
+        height: 30px;
+        width: 30px;
+        margin: 10px;
+        position: absolute;
+        top: 0;
+        right: 0;
     }
 
     .title {
@@ -202,6 +212,10 @@
         }).catch(e => {
             document.getElementById("orders").innerHTML = ""
             alert(e.message)
+        })
+
+        document.getElementById("back").addEventListener("click", () => {
+            loadComponent(document.getElementById("app"), '/screens/home', {});
         })
     }
 </script>
