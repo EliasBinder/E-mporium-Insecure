@@ -45,9 +45,9 @@
         const name = document.getElementById("name").value
         const tag = document.getElementById("tag").value
         const description = document.getElementById("description").value
-        const price = document.getElementById("price").value
+        const price = parseFloat(document.getElementById("price").value)
         const category = document.getElementById("category").value
-        const stock = document.getElementById("stock").value
+        const stock = parseInt(document.getElementById("stock").value)
         const fileInput = document.getElementById("image");
 
         const file = fileInput.files[0];
@@ -82,6 +82,8 @@
                 stock: stock,
                 image: reader.result
             }
+
+            console.log(JSON.stringify(data))
 
             fetchAPI("store/product", "PUT", data).then(() => {
                 window.render()

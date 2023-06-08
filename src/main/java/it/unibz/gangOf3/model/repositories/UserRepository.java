@@ -18,7 +18,9 @@ public class UserRepository {
 
     public static void createUser(String name, String email, String password, String type, String emergencyEmail, String emergencyPhone) throws UserAlreadyExistsException, SQLException, IOException, MessagingException {
         String registrationTokenUUID = UUID.randomUUID().toString();
-        DatabaseInsertionUtil.insertData("users", new String[]{"username", "email", "password", "type", "emergencyEmail", "emergencyPhone", "registrationToken"}, new String[]{name, email, password, type, emergencyEmail, emergencyPhone, registrationTokenUUID});
+        DatabaseUtil.getConnection()
+            .prepareStatement("INSERT INTO users (username, email, password, type, emergencyEmail, emergencyPhone, registrationToken) VALUES ('"+name+"','"+email+"','"+password+"',"+type+",'"+emergencyEmail+"','"+emergencyPhone+"','"+registrationTokenUUID+"')")
+            .execute();
         InputStream registrationEmailStream = User.class.getClassLoader().getResourceAsStream("backend/email/registration.html");
         String registrationEmail = new String(registrationEmailStream.readAllBytes());
         EmailSender.sendEmail(email, "Confirm your email", registrationEmail
